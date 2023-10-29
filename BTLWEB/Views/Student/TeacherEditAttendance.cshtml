@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Cập nhật thông tin sinh viên tham gia";
+    Layout = "~/Views/Shared/_LayoutTeacherDashboard.cshtml";
+}
+
+@model StudentAttendance
+
+<div class="content-table">
+    <div class="card">
+        <h5 class="card-header">Cập nhập thông tin</h5>
+        <div class="container-form">
+            <form method="post" asp-action="TeacherEditAttendance" asp-controller="student">
+            <input type="hidden" asp-for="Id" name="Id" value="@Model.Id" />
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-12" style="margin-top:0">
+                    <label asp-for="ClassId" style="margin-bottom:10px;">Lớp:</label>
+                    <select asp-for="ClassId" class=" form-control" id="ClassId" name="ClassId" asp-items="@ViewBag.ClassId">
+                    </select>
+
+                </div>
+                <div class="form-group col-lg-6 col-md-12" style="margin-top:0">
+                    <label asp-for="SubjectId" style="margin-bottom:10px;">Học phần:</label>
+                    <select asp-for="SubjectId" class=" form-control" id="SubjectId" name="SubjectId" asp-items="@ViewBag.SubjectId">  
+                    </select>
+
+                </div>
+            </div>
+            <div class="row" style="padding-top:20px;">
+                <div class="form-group col-lg-6 col-sm-12" style="margin-top:0;">
+                    <label asp-for="RollNo" style="margin-bottom:10px;">Sinh viên:</label>
+                    <select asp-for="RollNo" class="form-control" id="RollNo" name="RollNo" asp-items="@ViewBag.StudentRollNo">
+              
+                    </select>
+
+                </div>
+                <div class="form-group col-lg-6 col-sm-12" style="margin-top:0;">
+                    <label asp-for="Date" style="margin-bottom:10px;">Ngày tham gia:</label>
+                        <input type="date" class="form-control" id="Date" name="Date" value="@Model.Date?.ToString("yyyy-MM-dd")" />
+                    
+
+                </div>
+            </div>
+
+            <div class="" style="margin-top:20px;">
+                <button type="submit" class="btn btn-primary" style="margin-left:0;margin-bottom:0;">Cập nhật</button>
+                <button class="btn btn-secondary" asp-action="TeacherAttendance">Quay lại</button>
+
+            </div>
+        
+        </form>
+        </div>
+    </div>
+
+</div>

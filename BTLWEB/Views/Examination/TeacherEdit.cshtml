@@ -1,0 +1,56 @@
+﻿@model Exam
+
+@{
+    ViewData["Title"] = "Cập nhật điểm";
+    Layout = "~/Views/Shared/_LayoutTeacherDashboard.cshtml";
+}
+<div class="card">
+    <h2 class="card-header">Cập nhật điểm</h2>
+    <div class="container-form">
+
+        <form method="post" asp-action="Teacheredit" asp-controller="examination">
+            <input type="hidden" asp-for="ExamId" name="ExamId" value="@Model.ExamId" />
+            <div class="row">
+                <div class="form-group col-lg-6 col-md-12" style="margin-top:0">
+                    <label asp-for="ClassId" style="margin-bottom:10px;">Lớp:</label>
+                    <select asp-for="ClassId" class=" form-control" id="ClassId" name="ClassId" asp-items="@ViewBag.ClassId">
+                        @* <option value="auto">Chọn lớp</option> *@
+                    </select>
+
+                </div>
+                <div class="form-group col-lg-6 col-md-12" style="margin-top:0">
+                    <label asp-for="SubjectId" style="margin-bottom:10px;">Học phần:</label>
+                    <select asp-for="SubjectId" class=" form-control" id="SubjectId" name="SubjectId" asp-items="@ViewBag.SubjectId">
+                        <option value="auto">Chọn học phần</option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="row" style="padding-top:20px;">
+                <div class="form-group col-lg-4 col-sm-12" style="margin-top:0;">
+                    <label asp-for="RollNo" style="margin-bottom:10px;">Sinh viên:</label>
+                    <select asp-for="RollNo" class="form-control" id="RollNo" name="RollNo" asp-items="@ViewBag.StudentRollNo">
+                        
+                    </select>
+
+                </div>
+                <div class="form-group col-lg-4 col-sm-12" style="margin-top:0">
+                    <label asp-for="TotalMarks" style="margin-bottom:10px;">Tổng điểm:</label>
+                    <input type="text" class="form-control" id="TotalMarks" name="TotalMarks" value="@Model.TotalMarks" placeholder="Nhập điểm" style="color: black;background-color: #e0e1ff;" required />
+                </div>
+                <div class="form-group col-lg-4 col-sm-12" style="margin-top:0">
+                    <label asp-for="OutOfMarks" style="margin-bottom:10px;">Thang điểm:</label>
+                    <input type="text" class="form-control" id="OutOfMarks" name="OutOfMarks"  value="@Model.OutOfMarks" placeholder="Nhập thang điểm" style="color: black;background-color: #e0e1ff;" required />
+                </div>
+            </div>
+          
+           
+
+            <div class="" style="margin-top:20px;">
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                <button class="btn btn-secondary" asp-action="TeacherIndex">Quay lại</button>
+
+            </div>
+        </form>
+    </div>
+</div>

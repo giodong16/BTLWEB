@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Chi tiết bảng điểm";
+    Layout = "~/Views/Shared/_LayoutTeacherDashboard.cshtml";
+}
+
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<Exam>
+
+<div class="content-table">
+    <div class="card">
+        <h5 class="card-header">Chi tiết bảng điểm</h5>
+        <div class="container">
+       
+            <div class="row">
+                <div class="col-lg-10 col-md-12">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="text-nowrap">
+                                    <th>Mã</th>
+                                    <th>Lớp</th>
+                                    <th>Mã học phần</th>
+                                    <th>Học phần</th>
+                                    <th>Mã sinh viên</th>
+                                    <th>Tổng số điểm</th>
+                                    <th>Thang điểm</th>
+                            
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var exam in Model)
+                                {
+                                    <tr>
+                                        <td>@exam.ExamId</td>
+                                        <td>@exam.Class.ClassName</td>
+                                        <td>@exam.SubjectId </td>
+                                        <td>@exam.Subject.SubjectName </td>
+                                        <td>@exam.RollNo </td>
+                                        <td>@exam.TotalMarks </td>
+                                        <td>@exam.OutOfMarks </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-container" style="justify-content:start">
+                        @Html.PagedListPager(Model, page => Url.Action("Markdetails", new {page= page }))
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

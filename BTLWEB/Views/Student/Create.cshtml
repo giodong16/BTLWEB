@@ -1,0 +1,67 @@
+﻿@model Student
+
+@{
+     ViewData["Title"] = "Create";
+     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<div class="card">
+    <h2 class="card-header">Thêm sinh viên</h2>
+    <div class="container-form">
+       @* <div asp-validation-summary="All" class="text-danger" ></div> *@
+        <form method="post" asp-action="Create">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input type="text" class="form-control" id="Name" name="Name"  />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dob"></label>
+                <input type="date" class="form-control" id="Dob" name="Dob" />
+                <span asp-validation-for="Dob" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Gender"></label>
+                <select class="form-control" id="Gender" name="Gender" required>
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Mobile"></label>
+                <input type="tel" class="form-control" id="Mobile" name="Mobile"  />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="RollNo"></label>
+                <input type="text" class="form-control" id="RollNo" name="RollNo"  />
+                <span asp-validation-for="RollNo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address"></label>
+                <textarea class="form-control" id="Address" name="Address" ></textarea>
+                <span asp-validation-for="Address" class="text-danger"></span>
+             </div>
+
+            <div class="form-group">
+                <label asp-for="ClassId"></label>
+                <select asp-for="ClassId" class=" form-control" asp-items="@ViewBag.ClassId">
+                    <option value="">--Chọn lớp--</option>
+                </select>
+                <span asp-validation-for="ClassId" class="text-danger"></span>
+            </div>
+            <div class="" style="margin-top:10px;">
+                <button type="submit" class="btn btn-primary">Thêm</button>
+                <button class="btn btn-secondary" href="/Student/Index" >Quay lại</button>
+ 
+            </div>
+            
+        </form>
+    </div>
+</div>
+

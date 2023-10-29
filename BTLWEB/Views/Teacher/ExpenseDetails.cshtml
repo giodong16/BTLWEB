@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Chi tiết chi phí giảng dạy";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<Expense>
+
+<div class="content-table">
+    <div class="card">
+        <h5 class="card-header">Chi phí giảng dạy</h5>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="text-nowrap">
+                                    <th>Mã</th>
+                                    <th>Tên lớp</th>
+                                    <th>Học phần</th>
+                                    <th>Chi phí (mỗi tiết)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var expense in Model)
+                                {
+                                    <tr>
+                                        <td>@expense.ExpenseId</td>
+                                        <td>@expense.Class.ClassName</td>
+                                        <td>@expense.Subject.SubjectName</td>
+                                        <td>@expense.ChargeAmount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-container" style="justify-content:start">
+                        @Html.PagedListPager(Model, page => Url.Action("expenseDetails", new {page= page }))
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,269 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>@ViewData["Title"] - Management System</title>
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+     <!-- Favicon -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet" />
+
+   <link rel="stylesheet" href="../dashboard/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="../dashboard/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../dashboard/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../dashboard/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../dashboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <!-- Page CSS -->
+
+    <!-- Helpers -->
+    <script src="../dashboard/assets/vendor/js/helpers.js"></script>
+    <script src="../dashboard/assets/js/config.js"></script>
+</head>
+<body class="sb-nav-fixed">
+     <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu -->
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu ">
+          <div class="app-brand demo">
+            <a href="/home/home" class="app-brand-link">
+                        <img class="app-brand-logo demo" src="../dashboard/assets/img/logo-sms_2.jpg" style="max-width:65px;" />
+              <span class="app-brand-text demo menu-text fw-bold ms-2" style="text-transform: uppercase">SMS</span>
+            </a>
+
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+              <i class="bx bx-chevron-left bx-sm align-middle"></i>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text text-white">Chức năng</span>
+                    </li>
+            <!-- Dashboards -->
+                    <li class="menu-item">
+                        <a asp-action="AdminDashboard" asp-controller="home" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle me-2"></i>
+                            <div data-i18n="">Trang chủ</div>
+
+                        </a>
+                    </li>
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-table"></i>
+                <div data-i18n="classes">Lớp</div>
+              </a>
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a asp-action="index" asp-controller="class" class="menu-link">
+                    <div data-i18n="class">Danh sách lớp</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a asp-action="classfees" asp-controller="class" class="menu-link">
+                      <div data-i18n="ClassFees">Học phí</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            
+            <!-- Apps -->
+                    <li class="menu-item">
+                        <a asp-action="index" asp-controller="subject" class="menu-link">
+                            @* <i class="menu-icon tf-icons bx bx-user me-2"></i><i class="fas fa-chalkboard"></i> *@
+                            <i class="fas fa-chalkboard" style="width:18px;height:18px;padding-right:13px"></i>
+                            <div data-i18n="">Học phần</div>
+
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+@*                             <i class="menu-icon tf-icons bx bx-user me-2"></i> *@
+                          
+                            <i class="fas fa-user" style="width:18px;height:18px;padding-right:13px"></i>
+                            <div data-i18n="teachers">Giảng viên</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="/teacher/index"
+                                  
+                                   class="menu-link">
+                                   
+                                    <div data-i18n="teacher">Danh sách giảng viên</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-action="teachersubject" asp-controller="teacher" class="menu-link">
+                                    <div data-i18n="teacher-subject">Học phần giảng dạy</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-action="expense" asp-controller="teacher" class="menu-link">
+                                    <div data-i18n="teacher-expense">Phí giảng dạy</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a asp-action="expenseDetails" asp-controller="teacher" class="menu-link">
+                                    <div data-i18n="teacher-expense">Chi tiết phí giảng dạy</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="fas fa-user-graduate" style="width:18px;height:18px;padding-right:13px"></i>
+                            <div data-i18n="students">Sinh viên</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-action="index" asp-controller="student" class="menu-link">
+                                    <div data-i18n="student">Danh sách sinh viên</div>
+
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-file"></i>
+                            <div data-i18n="examination">Bài thi</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-action="markdetails" asp-controller="examination" class="menu-link">
+                                    <div data-i18n="marks-detail">Bảng điểm chi tiết</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                         @*    <i class="fas fa-user-graduate" style="width:18px;height:18px;padding-right:13px"></i> *@
+                            <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
+                            <div data-i18n="Attendance">Tham dự</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a asp-action="index" asp-controller="Attendance" class="menu-link">
+                                    <div data-i18n="teacher-attendance">Danh sách giảng viên</div>
+
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#" class="menu-link">
+                                    <div data-i18n="teacher-attendance-detail">Danh sách chi tiết</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+          <nav
+            class="layout-navbar container-fluid navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar">
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center">
+                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <input
+                    type="text"
+                    class="form-control border-0 shadow-none ps-1 ps-sm-2"
+                    placeholder="Search..."
+                    aria-label="Search..." />
+                </div>
+              </div>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+                            <li class="nav-item header-item">
+                                <a asp-action="upload" asp-controller="webuser" class="nav-item">Tài khoản</a>
+                            </li>
+                   <li class="nav-item header-item">
+                                <a asp-action="logout" asp-controller="access" class="nav-item">Đăng xuất</a>
+                  </li>
+                  
+              </ul>
+            </div>
+          </nav>
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+                <div class="content-wrapper container-xxl flex-grow-1 container-p-y custom-cursor-default-hover">
+            <!-- Content -->
+            @RenderBody()
+            <!-- / Content -->
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    </div>
+    <!-- / Layout wrapper -->
+
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+
+    <script src="../dashboard/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../dashboard/assets/vendor/libs/popper/popper.js"></script>
+    <script src="../dashboard/assets/vendor/js/bootstrap.js"></script>
+    <script src="../dashboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="../dashboard/assets/vendor/js/menu.js"></script>
+
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="../dashboard/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Danh sách giảng viên";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<TeacherAttendance>
+
+<div class="content-table">
+    <div class="card">
+        <h5 class="card-header">Danh sách giảng viên</h5>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-md-12">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="text-nowrap">
+                                    <th>Status</th>
+                                    <th>Mã giảng viên</th>
+                                    <th>Tên giảng viên</th>
+                                    <th>Số điện thoại</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var teacherAttendance in Model)
+                                {
+                                    <tr>
+
+                                       
+                                            @if(teacherAttendance.Status==true){
+                                                <td>Tham gia</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Vắng mặt</td>
+                                            }
+                                        <td>@teacherAttendance.TeacherId</td>
+                                        <td>@teacherAttendance.Teacher.Name </td>
+                                        <td>@teacherAttendance.Teacher.Mobile </td>
+                                        <td>@teacherAttendance.Teacher.Email </td>   
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-container" style="justify-content:start">
+                        @Html.PagedListPager(Model, page => Url.Action("index", new {page= page }))
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+

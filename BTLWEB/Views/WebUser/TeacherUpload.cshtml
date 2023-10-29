@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Thông tin tài khoản";
+    Layout = "~/Views/Shared/_LayoutTeacherDashboard.cshtml";
+}
+
+@model WebUser
+<div class="content-table">
+    <div class="card">
+        <h5 class="card-header">Thông tin tài khoản</h5>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Tên đăng nhập:</td>
+                                <td style="float:right;">@Model.UserName</td>
+                              
+                            </tr>
+                            <tr>
+                                <td>Mật khẩu:</td>
+                                <td style="float:right;">@Model.Password</td>
+
+                            </tr>
+                            <tr>
+                                <td>Loại: </td>
+                                <td style="float:right;">@Model.Loai</td>
+                            </tr>
+                            <tr >
+                                <td>Ảnh đại diện:  </td>
+                                <td> </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><img class="ava" src="../uploads/@Model.Avatar" style="width:200px;height:200px;border-radius:50%;margin-top:20px;" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <form method="post" asp-action="TeacherUpload" asp-controller="WebUser" enctype="multipart/form-data">
+                        <div class="form-group" style="margin-top:20px">
+                            <label for="avatar" >Đổi đại diện:</label>
+                            <input type="file" class="form-control-file" sstyle="background-color:#0DBDCE;color:white;" id="avatar" name="avatar" accept="image/*" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"style="margin-left:0;margin-top:20px;">Cập nhật ảnh</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
