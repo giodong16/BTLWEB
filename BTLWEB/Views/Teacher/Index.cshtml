@@ -3,27 +3,28 @@
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
 
-@using X.PagedList.Mvc.Core
-@model X.PagedList.IPagedList<Teacher>
+
+@model List<Teacher>
 
 <div class="content-table">
     <div class="card">
         <h5 class="card-header">Danh sách giảng viên</h5>
         <div><a class="btn btn-primary" asp-action="Create">Thêm mới</a></div>
+        <div id="pagination-container">
         <div class="table-responsive text-nowrap">
             <table class="table table-striped">
                 <thead>
                     <tr class="text-nowrap">
 
-                        <th>Name</th>
-                        <th>Date of Birth</th>
-                        <th>Gender</th>
-                        <th>Mobile</th>
+                        <th>Họ tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Điện thoại</th>
                         <th>Email</th>
-                        <th>Address</th>
-                        <th>Password</th>
+                        <th>Địa chỉ</th>
+                    
                         
-                        <th>Control</th>
+                        <th>Điều khiển</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,9 +51,41 @@
                 </tbody>
             </table>
         </div>
-        <div class="pagination-container">
-            @Html.PagedListPager(Model, page => Url.Action("Index", new {page= page }))
         </div>
     </div>
     
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        loadTeachers();
+
+        function loadTeachers(page = 1) {
+            $.ajax({
+                url: '/Teacher/GetTeachers',
+                type: 'GET',
+                data: { page: page },
+                success: function (result) {
+                    $('#pagination-container').html(result);
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Đã xảy ra lỗi khi tải dữ liệu!'
+                    });
+                }
+            });
+        }
+
+
+
+        $(document).on('click', '.page-link', function () {
+            var page = $(this).data('page');
+            loadTeachers(page);
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+

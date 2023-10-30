@@ -26,12 +26,11 @@ namespace BTLWEB.Controllers
 
             ViewBag.StudentRollNo = new SelectList(db.Students, "RollNo", "RollNo");
 
-            int pageSize = 2;
-            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+           
             var exams = db.Exams.AsNoTracking().OrderBy(x => x.ExamId).Include(y=>y.Class).Include(z=>z.Subject).ToList();
-            PagedList<Exam> lst = new PagedList<Exam>(exams, pageNumber, pageSize);
+      
 
-            return View(lst);
+            return View(exams);
         }
        
         [HttpPost]
@@ -112,7 +111,7 @@ namespace BTLWEB.Controllers
             {
                 return NotFound();
             }
-            var examt = db.Exams.Find(examId);
+            var examt = db.Exams.Where(T => T.ExamId == examId).FirstOrDefault();
             if (examt == null)
             {
                 return NotFound();
@@ -127,24 +126,38 @@ namespace BTLWEB.Controllers
         {
 
 
-            int pageSize = 2;
-            int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var exams = db.Exams.AsNoTracking().OrderBy(x => x.ExamId).Include(y => y.Class).Include(z => z.Subject).ToList();
-            PagedList<Exam> lst = new PagedList<Exam>(exams, pageNumber, pageSize);
 
-            return View(lst);
+            return View(exams);
         }
         [TeacherAuthentication]
         public IActionResult TeacherMarkdetails(int? page)
         {
-
-
-            int pageSize = 2;
-            int pageNumber = page == null || page < 0 ? 1 : page.Value;
             var exams = db.Exams.AsNoTracking().OrderBy(x => x.ExamId).Include(y => y.Class).Include(z => z.Subject).ToList();
-            PagedList<Exam> lst = new PagedList<Exam>(exams, pageNumber, pageSize);
+          
+            return View(exams);
+        }
+        public ActionResult GetMarkDetails(int page = 1)
+        {
+            int pageSize = 5; // Số lượng hiển thị trên mỗi trang
+            int totalExams = db.Exams.Count(); // Tổng số 
+            // Tính toán số trang và lấy danh sách cho trang hiện tại
+            var exams = db.Exams.OrderBy(s => s.SubjectId).Include(y => y.Class).Include(z => z.Subject)
+                                     .Skip((page - 1) * pageSize)
+                                     .Take(pageSize)
+                                     .ToList();
 
-            return View(lst);
+            // Tạo đối tượng phân trang
+            var pagination = new PaginationViewModel
+            {
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalItems = totalExams,
+                TotalPages = (int)Math.Ceiling((double)totalExams / pageSize)
+            };
+
+            // Trả về Partial View chứa danh sách sinh viên và phân trang
+            return PartialView("_TableMarkDetails", new MarkDetailsListViewModel { Exams = exams, Pagination = pagination });
         }
     }
 }

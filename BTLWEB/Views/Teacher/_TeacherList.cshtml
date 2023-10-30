@@ -1,0 +1,61 @@
+﻿@model TeacherListViewModel
+<div class="table-responsive text-nowrap">
+    <table class="table table-striped">
+        <thead>
+            <tr class="text-nowrap">
+
+                <th>Họ tên</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>Điện thoại</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+
+
+                <th>Điều khiển</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var teacher in Model.Teachers)
+            {
+                <tr>
+
+                    <td>@teacher.Name</td>
+                    <td>@teacher.Dob</td>
+                    <td>@teacher.Gender</td>
+                    <td>@teacher.Mobile</td>
+                    <td>@teacher.Email</td>
+                    <td>@teacher.Address</td>
+
+                    <td>
+                        <div class="d-flex">
+                            <a class="btn btn-sm btn-icon" asp-action="delete" asp-route-mid="@teacher.TeacherId"> <i class="bx bx-trash"></i></a>
+                            <a class="btn btn-sm btn-icon" asp-action="edit" asp-route-mid="@teacher.TeacherId"><i class="bx bx-edit"></i></a>
+                        </div>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @if (Model.Pagination.TotalPages > 1)
+        {
+            <li class="page-item @(Model.Pagination.PageNumber == 1 ? "disabled" : "")">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true" data-page="@(Model.Pagination.PageNumber - 1)">&lt;</a>
+            </li>
+            @for (int i = 1; i <= Model.Pagination.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.Pagination.PageNumber ? "active" : "")">
+                    <a class="page-link pagination-link" href="#" data-page="@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(Model.Pagination.PageNumber == Model.Pagination.TotalPages ? "disabled" : "")">
+                <a class="page-link" href="#" data-page="@(Model.Pagination.PageNumber + 1)">&gt;</a>
+            </li>
+        }
+    </ul>
+</nav>

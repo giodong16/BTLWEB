@@ -26,8 +26,25 @@ namespace BTLWEB.Controllers
             }
             else
             {
-                HttpContext.Session.Clear();
-                HttpContext.Session.Remove("UserName");
+                string name = HttpContext.Session.GetString("UserName");
+                string loai = HttpContext.Session.GetString("UserType");
+                if (loai == "admin")
+                {
+                    return RedirectToAction("AdminDashboard", "Home");
+                }
+                else if (loai == "teacher")
+                {
+                    return RedirectToAction("TeacherDashboard", "Home");
+                }
+                else
+                {
+                    /*context.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary
+                        {
+                            {"Controller", "Home" },
+                            {"Action", "Error" }
+                        });*/
+                }
                 return View();
 
             }

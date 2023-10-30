@@ -20,12 +20,11 @@ namespace BTLWEB.Controllers
         [AdminAuthentication]
         public IActionResult Index(int? page)
         {
-            int pageSize = 2;
-            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            
             var students = db.Students.AsNoTracking().OrderBy(x => x.RollNo).Include(m => m.Class).ToList();
-            PagedList<Student> lst = new PagedList<Student>(students, pageNumber, pageSize);
+            
 
-            return View(lst);
+            return View(students);
         }
 
         [AdminAuthentication]
@@ -195,11 +194,10 @@ namespace BTLWEB.Controllers
 
             ViewBag.StudentRollNo = new SelectList(db.Students, "RollNo", "Name");
 
-            int pageSize = 2;
-            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+          
             var attendances = db.StudentAttendances.AsNoTracking().Include(x => x.Class).Include(y => y.Subject).ToList();
-            PagedList<StudentAttendance> lst = new PagedList<StudentAttendance>(attendances, pageNumber, pageSize);
-            return View(lst);
+
+            return View(attendances);
         }
         [TeacherAuthentication]
         [HttpPost]
@@ -286,7 +284,51 @@ namespace BTLWEB.Controllers
             db.SaveChanges();
             return RedirectToAction(nameof(TeacherAttendance));
         }
+        public ActionResult GetStudents(int page = 1)
+        {
+            int pageSize = 5; // Số lượng sinh viên hiển thị trên mỗi trang
+            int totalStudents = db.Students.Count(); // Tổng số sinh viên
 
+            // Tính toán số trang và lấy danh sách sinh viên cho trang hiện tại
+            var students = db.Students.OrderBy(s => s.StudentId).Include(c=>c.Class)
+                                     .Skip((page - 1) * pageSize)
+                                     .Take(pageSize)
+                                     .ToList();
 
+            // Tạo đối tượng phân trang
+            var pagination = new PaginationViewModel
+            {
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalItems = totalStudents,
+                TotalPages = (int)Math.Ceiling((double)totalStudents / pageSize)
+            };
+
+            // Trả về Partial View chứa danh sách sinh viên và phân trang
+            return PartialView("_StudentList", new StudentListViewModel { Students = students, Pagination = pagination });
+        }
+        public ActionResult GetStudentAttendances(int page = 1)
+        {
+            int pageSize = 3; // Số lượnghiển thị trên mỗi trang
+            int totalStudents = db.StudentAttendances.Count(); // Tổng số
+
+            // Tính toán số trang và lấy danh sách cho trang hiện tại
+            var studentAttendances = db.StudentAttendances.OrderBy(s => s.Id).Include(x => x.Class).Include(y => y.Subject)
+                                     .Skip((page - 1) * pageSize)
+                                     .Take(pageSize)
+                                     .ToList();
+
+            // Tạo đối tượng phân trang
+            var pagination = new PaginationViewModel
+            {
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalItems = totalStudents,
+                TotalPages = (int)Math.Ceiling((double)totalStudents / pageSize)
+            };
+
+            // Trả về Partial View chứa danh sách sinh viên và phân trang
+            return PartialView("_TableStudentAttendance", new StudentAttendanceListViewModel { studentAttendances = studentAttendances, Pagination = pagination });
+        }
     }
 }

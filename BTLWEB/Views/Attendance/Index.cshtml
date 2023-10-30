@@ -3,8 +3,7 @@
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
 }
 
-@using X.PagedList.Mvc.Core
-@model X.PagedList.IPagedList<TeacherAttendance>
+@model List<TeacherAttendance>
 
 <div class="content-table">
     <div class="card">
@@ -12,6 +11,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-md-12">
+                    <div id="pagination-container">
                     <div class="table-responsive text-nowrap">
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -44,10 +44,9 @@
                                 }
                             </tbody>
                         </table>
+                        </div>
                     </div>
-                    <div class="pagination-container" style="justify-content:start">
-                        @Html.PagedListPager(Model, page => Url.Action("index", new {page= page }))
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -55,5 +54,36 @@
     </div>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        loadStudents();
+
+        function loadStudents(page = 1) {
+            $.ajax({
+                url: '/Attendance/GetTeacherAttendances',
+                type: 'GET',
+                data: { page: page },
+                success: function (result) {
+                    $('#pagination-container').html(result);
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Đã xảy ra lỗi khi tải dữ liệu sinh viên!'
+                    });
+                }
+            });
+        }
+
+        $(document).on('click', '.page-link', function () {
+            var page = $(this).data('page');
+            loadStudents(page);
+        });
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 

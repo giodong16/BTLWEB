@@ -20,12 +20,11 @@ namespace BTLWEB.Controllers
         [AdminAuthentication]
         public IActionResult Index(int? page)
         {
-            int pageSize = 2;
-            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            
             var classes = db.Classes.AsNoTracking().OrderBy(x => x.ClassId).ToList();
-            PagedList<Class> lst = new PagedList<Class>(classes, pageNumber, pageSize);
+            
 
-            return View(lst);
+            return View(classes);
         }
         [AdminAuthentication]
         [HttpPost]
@@ -42,39 +41,20 @@ namespace BTLWEB.Controllers
 
             return RedirectToAction("Index");
         }
-        [AdminAuthentication]
-        [HttpPost]
-        public bool EditClass(int classId, string className)
-        {
-            var classes1 =db.Classes.OrderBy(x => x.ClassId).ToList();
-            // Find the class with the given id in the list
-            var lop = classes1.FirstOrDefault(c => c.ClassId == classId);
-            // If the class exists and the new name is not empty, update the class name and return true
-            if (lop != null && !string.IsNullOrEmpty(className))
-            {
-                lop.ClassName = className;
-                return true;
-            }
-            // Otherwise, return false
-            else
-            {
-                return false;
-            }
-        }
-
         //fees
         [AdminAuthentication]
         public IActionResult ClassFees(int? page)
         {
+    
 
             ViewBag.ClassId = new SelectList(db.Classes, "ClassId", "ClassName");
-            int pageSize = 2;
-            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+          
             var feess = db.Fees.AsNoTracking().OrderBy(x => x.FeesId).Include(y =>y.Class).ToList();
-            PagedList<Fee> lst = new PagedList<Fee>(feess, pageNumber, pageSize);
+           
             
-            return View(lst);
+            return View(feess);
         }
+
         [HttpPost]
         [AdminAuthentication]
         public IActionResult ClassFees(int classID, string FeesAmount)
@@ -92,6 +72,70 @@ namespace BTLWEB.Controllers
             }
 
             return RedirectToAction("classFees");
+        }
+        [AdminAuthentication]
+        public IActionResult deleteFees(int? mid)
+        {
+
+            if (mid == null || mid == 0)
+            {
+                return NotFound();
+            }
+
+            var fee = db.Fees.Find(mid);
+            if (fee == null)
+            {
+                return NotFound();
+            }
+
+            db.Fees.Remove(fee); db.SaveChanges();
+            return RedirectToAction("classFees");
+        }
+        public ActionResult GetClass(int page = 1)
+        {
+            int pageSize = 5; // Số lượng class hiển thị trên mỗi trang
+            int totalClasses = db.Classes.Count(); // Tổng số sinh viên
+
+            // Tính toán số trang và lấy danh sách class cho trang hiện tại
+            var classes = db.Classes.OrderBy(s => s.ClassId)
+                                     .Skip((page - 1) * pageSize)
+                                     .Take(pageSize)
+                                     .ToList();
+
+            // Tạo đối tượng phân trang
+            var pagination = new PaginationViewModel
+            {
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalItems = totalClasses,
+                TotalPages = (int)Math.Ceiling((double)totalClasses / pageSize)
+            };
+
+            // Trả về Partial View chứa danh sách sinh viên và phân trang
+            return PartialView("_TableClass", new ClassListViewModel { Classes = classes, Pagination = pagination });
+        }
+        public ActionResult GetFees(int page = 1)
+        {
+            int pageSize = 2; // Số lượng  hiển thị trên mỗi trang
+            int totalFees = db.Fees.Count(); // Tổng số
+
+            // Tính toán số trang và lấy danh sách  cho trang hiện tại
+            var fees = db.Fees.OrderBy(s => s.FeesId).Include(x=>x.Class)
+                                     .Skip((page - 1) * pageSize)
+                                     .Take(pageSize)
+                                     .ToList();
+
+            // Tạo đối tượng phân trang
+            var pagination = new PaginationViewModel
+            {
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalItems = totalFees,
+                TotalPages = (int)Math.Ceiling((double)totalFees / pageSize)
+            };
+
+            // Trả về Partial View chứa danh sách sinh viên và phân trang
+            return PartialView("_TableFee", new FeeListViewModel { Fees = fees, Pagination = pagination });
         }
     }
 }
